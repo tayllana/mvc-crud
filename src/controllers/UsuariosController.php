@@ -2,7 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
-use src\models\Test;
+use src\models\Usuario;
 
 class UsuariosController extends Controller {
 
@@ -12,8 +12,18 @@ class UsuariosController extends Controller {
     }
 
     public function salvar() {
-        // echo 'novo';
-        $this->render('add');
+        $nome = filter_input(INPUT_POST, 'nome');
+        $email = filter_input(INPUT_POST, 'email');
+        if($nome && $email){
+            $data = Usuario::select()->where('email', $email)->execute();
+            if(count($data) === 0){
+                Usuario::insert(['nome' => $nome,
+                                 'email' => $email
+                                ])->execute();
+            }
+        }else{
+
+        }
     }
 
 }
