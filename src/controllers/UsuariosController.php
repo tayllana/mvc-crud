@@ -11,4 +11,9 @@ class UsuariosController extends Controller {
         $this->render('add');
     }
 
+    public function salvar() {
+        // echo 'novo';
+        $this->render('add');
+    }
+
 }
