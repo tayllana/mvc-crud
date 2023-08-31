@@ -7,11 +7,19 @@ use src\models\Usuario;
 class UsuariosController extends Controller {
 
     public function add() {
-        // echo 'novo';
         $this->render('add');
     }
 
-    public function salvar() {
+    public function editar($args) {
+        $this->render('editar', ['usuario' => Usuario::select()->find($args['id'])]);
+    }
+
+    public function delete($args) {
+        Usuario::delete()->where('id', $args['id'])->execute();
+        $this->redirect('/');  
+    }
+
+    public function insert() {
         $nome = filter_input(INPUT_POST, 'nome');
         $email = filter_input(INPUT_POST, 'email');
         if($nome && $email){
@@ -26,4 +34,13 @@ class UsuariosController extends Controller {
         $this->redirect('/novo');
     }
 
+    public function update($args) {
+        $nome = filter_input(INPUT_POST, 'nome');
+        $email = filter_input(INPUT_POST, 'email');
+        if($nome && $email){
+            $data = Usuario::update()->set(['nome' => $nome, 'email' => $email])->where('id', $args['id'])->execute();
+            $this->redirect('/');
+        }
+        $this->redirect('/usuario/'.$args['id'].'/editar');
+    }
 }
