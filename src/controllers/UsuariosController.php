@@ -20,10 +20,10 @@ class UsuariosController extends Controller {
                 Usuario::insert(['nome' => $nome,
                                  'email' => $email
                                 ])->execute();
+            $this->redirect('/');                       
             }
-        }else{
-
         }
+        $this->redirect('/novo');
     }
 
 }
